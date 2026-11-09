@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <RootNamespace>OpenBarcode</RootNamespace>
+    <AssemblyName>OpenBarcode</AssemblyName>
+
+    <PackageId>OpenBarcode</PackageId>
+    <Version>2.0.0</Version>
+    <Authors>Yoel Nunez</Authors>
+    <Description>Barcode generation for Code 39, EAN-13 and UPC-A. Returns the bar and space modules; has no dependencies.</Description>
+    <PackageTags>barcode;code39;ean;ean13;upc;upca</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://openbarcode.dev</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/openbarcode/csharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests/**" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

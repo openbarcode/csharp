@@ -9,7 +9,46 @@
 
 # Open Barcode for C#
 
-Barcode generation library for C# (Code 39, EAN, UPC).
+Barcode library for C# that creates Code 39, EAN-13 and UPC-A barcodes. It returns the bar and space modules and has no runtime dependencies. Drawing the modules is up to your application.
+
+## Install
+
+Install the package from NuGet:
+
+```sh
+dotnet add package OpenBarcode
+```
+
+The package targets .NET Standard 2.0 and .NET 8.
+
+## Usage
+
+```csharp
+using OpenBarcode.Linear;
+
+LinearBarcode ean = new EAN("400638133393");
+string code = ean.Code();          // "4006381333931" (check digit added)
+int[] modules = ean.Barcode();     // 95 values: 1 = bar, 0 = space
+
+LinearBarcode upc = new UPC("036000291452");     // check digit verified
+LinearBarcode code39 = new Code39("Hello world"); // Code() is "HELLO WORLD"
+```
+
+EAN and UPC accept digits only. They take the code with or without its check digit. If you include a check digit that does not match, the constructor throws `ArgumentException`.
+
+Code 39 trims the input, converts it to upper case, and throws `ArgumentException` for characters it cannot encode, including `*`.
+
+Each call to `Barcode()` returns a new array, so changing the array does not change the barcode.
+
+## Testing
+
+The tests use xUnit. They need the .NET 8 SDK:
+
+```sh
+dotnet test tests/OpenBarcode.Tests/OpenBarcode.Tests.csproj
+```
+
+## Other languages
 
 Open Barcode is available in several languages:
 

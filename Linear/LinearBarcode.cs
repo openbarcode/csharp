@@ -14,16 +14,22 @@
  * limitations under the License.
  *
  */
-using System;
-
-namespace OpenBarcode
+namespace OpenBarcode.Linear
 {
-	public interface LinearBarcode {
-		void BuildSequence();
-		int[] MapSequence(char c, int pos);
-		int[] Barcode();
-		string Code();
-		int CalculateCheckDigit();
-	}
-}
+    /// <summary>
+    /// A one-dimensional barcode.
+    /// </summary>
+    public interface LinearBarcode
+    {
+        /// <summary>
+        /// The encoded text. For UPC and EAN this includes the check digit.
+        /// </summary>
+        string Code();
 
+        /// <summary>
+        /// The modules from left to right: 1 is a bar, 0 is a space.
+        /// Each call returns a new array, so callers may change it freely.
+        /// </summary>
+        int[] Barcode();
+    }
+}
