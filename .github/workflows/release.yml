@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write   # NuGet trusted publishing (OIDC)
 
 jobs:
   publish:
@@ -28,5 +29,13 @@ jobs:
       - name: Pack
         run: dotnet pack OpenBarcode.csproj --configuration Release --output artifacts
 
+      # Trusted publishing: NuGet issues a short-lived key for this run, so no long-lived API key is stored.
+      # NUGET_USER is a repository variable holding the NuGet.org profile name (not a secret).
+      - name: Log in to NuGet
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ vars.NUGET_USER }}
+
       - name: Publish to NuGet
-        run: dotnet nuget push "artifacts/*.nupkg" --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push "artifacts/*.nupkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json
